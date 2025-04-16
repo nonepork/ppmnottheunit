@@ -1,8 +1,11 @@
-# ppmnottheunit
+<div align="center">
 
+# ppmnottheunit
 > A simple tui project manager in powershell
 
 [![asciicast](https://asciinema.org/a/D5cUE1GpqjvEQ4s12AEeWqqQz.svg)](https://asciinema.org/a/D5cUE1GpqjvEQ4s12AEeWqqQz)
+
+</div>
 
 ## Features
 - Provides interactive selection of projects (via PSFzf)
