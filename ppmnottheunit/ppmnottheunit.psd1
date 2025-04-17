@@ -1,6 +1,6 @@
 @{
   RootModule = 'ppmnottheunit.psm1'
-  ModuleVersion = '1.1.1'
+  ModuleVersion = '1.1.2'
   GUID = '0207a754-f0f0-4fe9-9eb1-97ccd32a8c46'
   Author = 'nonepork'
   CompanyName = ''

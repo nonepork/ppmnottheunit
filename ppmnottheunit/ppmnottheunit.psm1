@@ -1,9 +1,9 @@
-function ppm()
+function ppm
 {
-  $baseDir = (Get-PPMConfig).BaseDir
-
-  function RenderInterface()
+  function RenderInterface
   {
+    $baseDir = (Get-PPMConfig).BaseDir
+
     Clear-Host
     Write-Host "Projects" -ForegroundColor Cyan
     Write-Host "==================" -ForegroundColor Cyan
@@ -22,29 +22,29 @@ function ppm()
     Write-Host "[s] Select [c] Create [r] Rename [d] Delete [p] Path [q] Exit" -ForegroundColor Yellow
   }
 
-  function HandleKeyPress()
+  function HandleKeyPress
   {
     $key = $host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
 
     switch ($key.Character)
     {
       'q'
-      { return $false
+      { return $false 
       }
       's'
-      { SelectProject;
+      { SelectProject 
       }
       'c'
-      { CreateProject; return $true
+      { CreateProject; return $true 
       }
       'r'
-      { RenameProject; return $true
+      { RenameProject; return $true 
       }
       'd'
-      { DeleteProject; return $true
+      { DeleteProject; return $true 
       }
       'p'
-      { Set-PPMConfig; return $true
+      { Set-PPMConfig; return $true 
       }
       default
       { return $true 
@@ -88,35 +88,41 @@ function Get-PPMConfig
   Get-Content $configPath | ConvertFrom-Json
 }
 
-
 function Set-PPMConfig
 {
-  Write-Host "(type nothing to cancel)"
-  $baseDir = Read-Host "Please enter the base directory path"
+  $configPath = Join-Path $HOME ".ppmnottheunit.json"
 
-  if ([string]::IsNullOrWhiteSpace($baseDir))
+  function Get-ValidPath
   {
-    Write-Host "No input provided. Configuration unchanged."
-    return
-  }
-
-  while (-not (Test-Path $baseDir))
-  {
-    Write-Warning "Directory does not exist. Please try again."
-    $baseDir = Read-Host "Please enter the base directory path"
-
-    if ([string]::IsNullOrWhiteSpace($baseDir))
+    while ($true)
     {
-      Write-Host "No input provided. Configuration unchanged."
-      return
+      Write-Host "(type nothing to cancel)"
+      $inputPath = Read-Host "Please enter the base directory path"
+
+      if ([string]::IsNullOrWhiteSpace($inputPath))
+      {
+        Write-Host "No input provided. Configuration unchanged."
+        Start-Sleep -Seconds 1
+        return $null
+      }
+
+      if (Test-Path $inputPath)
+      {
+        return $inputPath
+      }
+
+      Write-Warning "Directory does not exist. Please try again."
     }
   }
 
-  @{
-    BaseDir = $baseDir
-  } | ConvertTo-Json | Out-File -FilePath $configPath -Encoding utf8
+  $baseDir = Get-ValidPath
+  if ($baseDir)
+  {
+    @{ BaseDir = $baseDir } | ConvertTo-Json | Out-File -FilePath $configPath -Encoding utf8
+    Write-Host "`nNew path set as: $baseDir" -ForegroundColor Green
+    Start-Sleep -Seconds 1
+  }
 }
-
 
 function SelectProject()
 {
