@@ -40,7 +40,8 @@ And enter the folder path that you would like to use as projects' root folder.
 - `c` - Create new project
 - `r` - Rename project
 - `d` - Delete project (with confirmation steps)
+- `p` - Change base path
 - `q` - Quit interface
 
 ## Configurations
-To change the base directory, edit .ppmnottheunit.json in your home directory.
+To change the base directory, you can either press p, or edit .ppmnottheunit.json in your home directory.

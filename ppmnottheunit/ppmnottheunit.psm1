@@ -19,7 +19,7 @@ function ppm()
     }
 
     Write-Host "`n==================" -ForegroundColor Cyan
-    Write-Host "[s] Select [c] Create [r] Rename [d] Delete [q] Exit" -ForegroundColor Yellow
+    Write-Host "[s] Select [c] Create [r] Rename [d] Delete [p] Path [q] Exit" -ForegroundColor Yellow
   }
 
   function HandleKeyPress()
@@ -43,6 +43,9 @@ function ppm()
       'd'
       { DeleteProject; return $true
       }
+      'p'
+      { Set-PPMConfig; return $true
+      }
       default
       { return $true 
       }
@@ -55,6 +58,8 @@ function ppm()
     RenderInterface
     $continue = HandleKeyPress
   }
+
+  Clear-Host
 }
 
 function Get-PPMConfig
@@ -84,6 +89,35 @@ function Get-PPMConfig
 }
 
 
+function Set-PPMConfig
+{
+  Write-Host "(type nothing to cancel)"
+  $baseDir = Read-Host "Please enter the base directory path"
+
+  if ([string]::IsNullOrWhiteSpace($baseDir))
+  {
+    Write-Host "No input provided. Configuration unchanged."
+    return
+  }
+
+  while (-not (Test-Path $baseDir))
+  {
+    Write-Warning "Directory does not exist. Please try again."
+    $baseDir = Read-Host "Please enter the base directory path"
+
+    if ([string]::IsNullOrWhiteSpace($baseDir))
+    {
+      Write-Host "No input provided. Configuration unchanged."
+      return
+    }
+  }
+
+  @{
+    BaseDir = $baseDir
+  } | ConvertTo-Json | Out-File -FilePath $configPath -Encoding utf8
+}
+
+
 function SelectProject()
 {
   $baseDir = (Get-PPMConfig).BaseDir
@@ -100,8 +134,8 @@ function CreateProject()
 {
   $baseDir = (Get-PPMConfig).BaseDir
   Clear-Host
-  Write-Host "Create new project" -ForegroundColor Cyan
-  Write-Host "=================" -ForegroundColor Cyan
+  Write-Host "Create new project (type nothing to cancel)" -ForegroundColor Cyan
+  Write-Host "==================" -ForegroundColor Cyan
   $newFolderName = Read-Host "`nEnter new project name"
 
   if ($newFolderName)
