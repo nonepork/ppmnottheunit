@@ -2,13 +2,21 @@ name: Publish
 on: [workflow_dispatch]
 
 jobs:
-    build:
-      name: Publish
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
-        - name: Publish
-          env:
-            APIKEY: ${{ secrets.APIKEY }}
-          run: .\publish.ps1
-          shell: pwsh
+  build:
+    name: Publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install PSFzf
+        shell: pwsh
+        run: |
+          Install-Module PSFzf -Scope CurrentUser -Force -AllowClobber
+          Get-Module -ListAvailable PSFzf
+
+      - name: Publish
+        env:
+          APIKEY: ${{ secrets.APIKEY }}
+        run: .\publish.ps1
+        shell: pwsh
+
