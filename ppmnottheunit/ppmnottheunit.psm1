@@ -32,7 +32,7 @@ function ppm()
       { return $false
       }
       's'
-      { SelectProject; return $false # cd into without waiting
+      { SelectProject;
       }
       'c'
       { CreateProject; return $true
@@ -91,7 +91,9 @@ function SelectProject()
   if ($selectedProject)
   {
     Set-Location $selectedProject
+    return $false;
   }
+  return $true;
 }
 
 function CreateProject()
