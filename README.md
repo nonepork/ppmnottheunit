@@ -1,13 +1,15 @@
 <div align="center">
 
 # ppmnottheunit
+
 > A simple tui project manager in powershell
 
-[![asciicast](https://asciinema.org/a/716117.svg)](https://asciinema.org/a/716117)
+[![asciicast](https://asciinema.org/a/WbDEwc2PAt3O2YWomY2SUZKEj.svg)](https://asciinema.org/a/WbDEwc2PAt3O2YWomY2SUZKEj)
 
 </div>
 
 ## Features
+
 - Provides interactive selection of projects (via PSFzf)
 - Creates new project directories
 - Renames existing projects
@@ -15,10 +17,12 @@
 - Keyboard shortcuts for all operations
 
 ## Prerequisites
+
 - PowerShell 7+ recommended
 - **PSFzf module** installed (`Install-Module PSFzf`)
 
 ## Installation
+
 1. Ensure dependencies are installed:
    ```powershell
    Install-Module -Name PSFzf -Scope CurrentUser -Force
@@ -29,13 +33,17 @@
    ```
 
 ## Usage
+
 Run the main interface with:
+
 ```powershell
 ppm
 ```
+
 And enter the folder path that you would like to use as projects' root folder.
 
 ## Keyboard Shortcuts
+
 - `s` - Select project (changes directory)
 - `c` - Create new project
 - `r` - Rename project
@@ -44,4 +52,5 @@ And enter the folder path that you would like to use as projects' root folder.
 - `q` - Quit interface
 
 ## Configurations
+
 To change the base directory, you can either press p, or edit .ppmnottheunit.json in your home directory.
